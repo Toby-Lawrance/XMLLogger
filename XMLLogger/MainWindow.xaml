@@ -5,11 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:XMLLogger"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="400">
+        Title="MainWindow" Height="450" Width="600"
+        Loaded="MainWindow_OnLoaded">
     <Grid>
         <Label Content="Port: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,15,0,0"/>
         <TextBox Name="PortBox" Text="59152" Margin="60,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"/>
         <TextBox Name="Errors" Text="Errors go here" Margin="20,-150,0,0" Width="300" Height="100" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
+        <ListBox Name="DataPointNames" HorizontalAlignment="Right" VerticalAlignment="Top" Height="200" Width="150" SelectionMode="Single" SelectionChanged="DataPointNames_OnSelectionChanged"/>
+        <Label Content="Data Point Name:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,205,75,0"/>
+        <TextBox Name="DataPointName" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,210,0,0" Width="75"/>
+        <Button Name="AddToConsider" Content="Add" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,230,50,0" Click="AddToConsider_OnClick"/>
+        <Button Name="UpdateToConsider" Content="Update" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,250,33,0" Click="UpdateToConsider_OnClick"/>
+        <Button Name="RemoveToConsider" Content="Remove" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,230,0,0" Click="RemoveToConsider_OnClick"/>
         <Button Name="StartBtn" Content="Start" HorizontalAlignment="Center" VerticalAlignment="Center" Click="StartBtn_OnClick"/>
         <Button Name="StopBtn" Content="Stop" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="75,0,0,0" Click="StopBtn_OnClick"/>
         <Button Name="FolderBtn" Content="Output Folder" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0" Click="ButtonBase_OnClick"/>

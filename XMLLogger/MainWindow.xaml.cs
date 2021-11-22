@@ -115,7 +115,7 @@ namespace XMLLogger
                 var data = client.EndReceive(ar, ref ep);
                 var stringed = Encoding.ASCII.GetString(data);
                 Dispatcher.Invoke(() => { DataDisplay.Text = stringed; });
-                
+
                 var doc = XDocument.Parse(stringed);
 
                 var dp = doc.Descendants("DataPoint").First();
@@ -128,8 +128,65 @@ namespace XMLLogger
             }
             catch (Exception exception)
             {
-                throw;
+                Dispatcher.Invoke(() => { Errors.Text = exception.ToString(); });
             }
+        }
+
+        private void AddToConsider_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(DataPointName.Text))
+            {
+                return;
+            }
+
+            var identicalExists =
+                DataPointNames.Items.SourceCollection.OfType<string>().Any(s => s == DataPointName.Text);
+            if (identicalExists)
+            {
+                DataPointName.Text += "1";
+                return;
+            }
+
+            DataPointNames.SelectedIndex = DataPointNames.Items.Add(DataPointName.Text);
+        }
+
+        private void UpdateToConsider_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(DataPointName.Text))
+            {
+                return;
+            }
+
+            if (DataPointNames.SelectedItem is not string)
+            {
+                return;
+            }
+            
+            var selectedIndex = DataPointNames.SelectedIndex;
+            DataPointNames.Items[selectedIndex] = DataPointName.Text;
+            DataPointNames.SelectedIndex = selectedIndex;
+        }
+
+        private void RemoveToConsider_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (DataPointNames.SelectedItem is string s)
+            {
+                DataPointNames.Items.Remove(s);
+                DataPointNames.SelectedIndex = DataPointNames.Items.Count - 1;
+            }
+        }
+
+        private void DataPointNames_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataPointNames.SelectedItem is string s)
+            {
+                DataPointName.Text = s;
+            }
+        }
+
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            DataPointNames.SelectedIndex = DataPointNames.Items.Add("DataPoint");
         }
     }
 }
